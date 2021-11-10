@@ -1,0 +1,18 @@
+<div  class="container mt-5">
+    <div *ngIf="!registerMode" style="text-align: center;">
+      <h1>Find your Match</h1>
+      <p class="lead" >Something short and leading about the collection below—its contents, the creator, etc. Make it short </p>
+          <div class="text-center">
+            <a href="#" (click)="registertoggle()" class="btn btn-primary btn-lg mr-2">Register</a>
+            <a href="#" class="btn btn-secondary btn-lg">Secondary action</a>
+          </div>        
+    </div>
+
+    <div *ngIf="registerMode" class="container">
+      <div class="row justify-content-center">
+          <div class="col-4">
+              <app-register [userFromHomeCom]="users" (cancelRegister)="cancelRegistration($event)"></app-register>
+          </div>
+      </div>
+    </div>
+  </div>

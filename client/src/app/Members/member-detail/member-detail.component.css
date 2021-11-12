@@ -1,0 +1,22 @@
+
+.img-thumbnail{
+    margin: 25px;
+    width: 83%;
+    height: 40%;
+    margin-bottom: 0px;
+}
+
+ .card{
+     height: 94%;
+ }
+.card-body{
+    margin-top: 5px;
+
+}
+
+.card-footer{
+   
+    background-color: #e83283;
+    border-top: none;
+}
+

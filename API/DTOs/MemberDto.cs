@@ -11,6 +11,8 @@ namespace API.DTOs
 
         public string UserName { get; set; }
 
+        public string Introduction { get; set; }
+
         public string PhotoUrl { get; set; }
         public int Age { get; set; }
 

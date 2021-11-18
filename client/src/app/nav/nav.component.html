@@ -19,7 +19,8 @@
         </li>
         </ul>
         <div class="dropdown" *ngIf="(currentUser$ | async) as User"  dropdown>
-          <a class="dropdown-toggle text-light" dropdownToggle >Welcome {{User.username | titlecase}}</a>
+          <img src="{{User.photoUrl}}" alt="{{User.username}}">
+          <a class="dropdown-toggle text-light ml-2" dropdownToggle >Welcome {{User.username | titlecase}}</a>
           <a class="dropdown-menu mt-3"  *dropdownMenu>
               <a routerLink="/member/edit"  class="dropdown-item">Edit Profile</a>
               <div class="dropdown-divider"></div>

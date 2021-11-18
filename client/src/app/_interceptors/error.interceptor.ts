@@ -21,14 +21,14 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error) {
           switch (error.status) {
             case 400:
-                if(error.error.errors){
+                if(error.errors){
                   const modalStateErrors=[];
                   for(const key in error.error.errors){
                     modalStateErrors.push(error.error.errors[key]);
                   }
                   throw modalStateErrors.flat();
                 }else{
-                  this.toastr.error(error.statusText, error.status);
+                  this.toastr.error(error.error, error.status);
                 }
                 
               break;

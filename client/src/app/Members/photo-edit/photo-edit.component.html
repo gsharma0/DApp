@@ -9,6 +9,7 @@
             class="btn btn-sm">Main</button>
             <button 
             (click)="deletePhoto(photo.id)"
+            [disabled]="photo.isMain"
             class="btn btn-sm btn-danger"><i class ="fa fa-trash"></i></button>
         </div>
 

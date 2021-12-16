@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -28,6 +28,12 @@ export class DateInputComponent implements ControlValueAccessor {
   }
   registerOnTouched(fn: any): void {
 
+  }
+
+  toControl(absCtrl: AbstractControl): FormControl {
+    const ctrl = absCtrl as FormControl;
+    // if(!ctrl) throw;
+    return ctrl;
   }
 
 }

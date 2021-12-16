@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -29,12 +30,41 @@ namespace API.Data
             .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-             return await _context.Users
-            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .ToListAsync();
+
+            //changes done for adding filtering
+           /* var query = _context.Users
+                        .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                        .AsNoTracking(); */
+
+            var query= _context.Users.AsQueryable();
+            query = query.Where(user => user.UserName != userParams.CurrentUsername);
+            query = query.Where(user => user.Gender == userParams.Gender);
+
+            var minAge = DateTime.Now.AddYears(-userParams.MaxAge-1);
+            var maxAge = DateTime.Now.AddYears(-userParams.MinAge);
+
+            query = query.Where(user => user.DateOfBirth >= minAge && user.DateOfBirth <= maxAge);
+
+            query = userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                _ => query.OrderByDescending(u => u.LastActive)
+            };
+
+             var finalquery =query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking();
+
+            return await PagedList<MemberDto>.CreateAsync(finalquery,userParams.PageNumber,userParams.PageSize);
         }
+
+        //Commented to use pagination feature
+        // public async Task<IEnumerable<MemberDto>> GetMembersAsync()
+        // {
+        //      return await _context.Users
+        //     .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+        //     .ToListAsync();
+        // }
 
         public async Task<AppUser> GetUserByIdAsync(int id)
         {

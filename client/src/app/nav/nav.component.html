@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
     <div class="container">
-      <a class="navbar-brand" routerLink="/">D App</a>    
+      <a class="navbar-brand"  routerLink="/">D App</a>    
         <ul class="navbar-nav mr-auto" >
          <!--  <ul class="navbar-nav mr-auto"> -->
            <ng-container *ngIf="currentUser$ | async">
@@ -20,7 +20,7 @@
         </ul>
         <div class="dropdown" *ngIf="(currentUser$ | async) as User"  dropdown>
           <img src="{{User.photoUrl || './assets/user.png'}}" style="max-height: 40px;" alt="{{User.username}}">
-          <a class="dropdown-toggle text-light ml-2" dropdownToggle >Welcome {{User.username | titlecase}}</a>
+          <a class="dropdown-toggle text-light ml-2" dropdownToggle >Welcome {{User.knownAs | titlecase}}</a>
           <a class="dropdown-menu mt-2"  *dropdownMenu>
               <a routerLink="/member/edit"  class="dropdown-item">Edit Profile</a>
               <div class="dropdown-divider"></div>

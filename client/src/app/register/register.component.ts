@@ -71,5 +71,11 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister.emit(false);
   }
 
+  toControl(absCtrl: AbstractControl): FormControl {
+    const ctrl = absCtrl as FormControl;
+    // if(!ctrl) throw;
+    return ctrl;
+}
+
 
 }

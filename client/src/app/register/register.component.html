@@ -41,13 +41,13 @@
             <input type="radio" value="female" formControlName="gender" class="ml-3"> Female
         </label>
     </div>
-    <app-text-input [formControl]="registerForm.controls['username']" [label]='"Username"' ></app-text-input>
-    <app-text-input [formControl]="registerForm.controls['knownAs']" [label]='"KnownAs"' ></app-text-input>
-    <app-date-input [formControl]="registerForm.controls['dateofBirth']" [label]='"DateOfBirth"' [maxDate]="maxDate" ></app-date-input>
-    <app-text-input [formControl]="registerForm.controls['city']" [label]='"City"' ></app-text-input>
-    <app-text-input [formControl]="registerForm.controls['country']" [label]='"Country"' ></app-text-input>
-    <app-text-input [formControl]="registerForm.controls['password']" [label]='"Password"' [type]="'password'" ></app-text-input>
-    <app-text-input [formControl]="registerForm.controls['confirmPassword']" [label]='"Confirm Password"' [type]="'password'" ></app-text-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['username'])" [label]='"Username"' ></app-text-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['knownAs'])" [label]='"KnownAs"' ></app-text-input>
+    <app-date-input [formControl]="toControl(registerForm.controls['dateofBirth'])" [label]='"DateOfBirth"' [maxDate]="maxDate" ></app-date-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['city'])" [label]='"City"' ></app-text-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['country'])" [label]='"Country"' ></app-text-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['password'])" [label]='"Password"' [type]="'password'" ></app-text-input>
+    <app-text-input [formControl]="toControl(registerForm.controls['confirmPassword'])" [label]='"Confirm Password"' [type]="'password'" ></app-text-input>
     <!-- Code commented of reactive form to use reusable text input form -->
     <!-- <div class="form-group">
         <input type="text"

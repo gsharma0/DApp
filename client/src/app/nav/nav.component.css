@@ -6,3 +6,6 @@ img{
     border: 2px solid;
     display: inline;
 }
+.navbar-brand {
+    margin-left: 100px;
+}

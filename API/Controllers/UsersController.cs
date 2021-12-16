@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -38,14 +40,27 @@ namespace API.Controllers
         [HttpGet]
         //[AllowAnonymous]
         //public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
             //return await _context.Users.ToListAsync();
            // return Ok(await _userRepository.GetUsersAsync());
         //    var users=await _userRepository.GetUsersAsync();
         //    var userstoReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
         //    return Ok(userstoReturn);
-        var users= await _userRepository.GetMembersAsync();
+        //Comented below for pagination
+        //var users= await _userRepository.GetMembersAsync();
+        var username = User.GetUserName();
+        var user= await _userRepository.GetUserByNameAsync(username);
+
+        userParams.CurrentUsername = user.UserName;
+
+        if(string.IsNullOrEmpty(userParams.Gender)){
+            userParams.Gender = user.Gender == "male" ? "female" :"male";
+        }
+
+
+        var users= await _userRepository.GetMembersAsync(userParams);
+        Response.AddPaginationHeaders(users.CurrentPage, users.TotalPages, users.PageSize,users.TotalCount);
         return Ok(users);
 
         }
@@ -75,7 +90,7 @@ namespace API.Controllers
 
         [HttpPut]
         public async Task<ActionResult> UpdateUser(UpdateMemberDto member){
-            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.GetUserName();
             var user= await _userRepository.GetUserByNameAsync(username);
 
             _mapper.Map(member,user);
@@ -86,7 +101,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
-             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+             var username = User.GetUserName();
             var user= await _userRepository.GetUserByNameAsync(username);
             var result = await _photo.UploadPhotoAsync(file);
             if(result.Error != null) return BadRequest(result.Error.Message);
@@ -112,7 +127,7 @@ namespace API.Controllers
          [HttpPut("set-main-photo/{photoId}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
-             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+             var username = User.GetUserName();
             var user= await _userRepository.GetUserByNameAsync(username);
 
             var photo = user.Photos.FirstOrDefault(x=>x.ID == photoId);
@@ -130,7 +145,7 @@ namespace API.Controllers
 
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto (int photoId){
-             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+             var username = User.GetUserName();
             var user= await _userRepository.GetUserByNameAsync(username);
             var photo = user.Photos.FirstOrDefault(x=>x.ID == photoId);
             if(photo == null) return NotFound("Invalid Details");

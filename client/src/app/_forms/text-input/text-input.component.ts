@@ -1,5 +1,5 @@
 import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
@@ -25,5 +25,10 @@ export class TextInputComponent implements ControlValueAccessor {
 
   }
 
+  toControl(absCtrl: AbstractControl): FormControl {
+    const ctrl = absCtrl as FormControl;
+    // if(!ctrl) throw;
+    return ctrl;
+  }
 
 }

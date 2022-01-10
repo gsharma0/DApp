@@ -19,6 +19,7 @@ namespace API.Extensions
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<ITokenService,TokenService>();
             services.AddScoped<ICalculator,Calculator>();
+            services.AddScoped<ILikesRepository,LikeRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<ICloudinaryService,CloudinaryService>();
             services.AddScoped<IUserRepository, UserRepository>();

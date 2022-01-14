@@ -15,7 +15,6 @@ namespace API.Helpers
 
         private int _pageSize = 10;
 
-        private int myVar;
         public int PageSize
         {
             get => _pageSize;

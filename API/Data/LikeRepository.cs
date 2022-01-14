@@ -7,10 +7,12 @@ using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
+    [Authorize]
     public class LikeRepository : ILikesRepository
     {
         private readonly DataContext _context;

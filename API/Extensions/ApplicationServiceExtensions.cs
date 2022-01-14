@@ -20,6 +20,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService,TokenService>();
             services.AddScoped<ICalculator,Calculator>();
             services.AddScoped<ILikesRepository,LikeRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<ICloudinaryService,CloudinaryService>();
             services.AddScoped<IUserRepository, UserRepository>();

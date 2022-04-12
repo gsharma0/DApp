@@ -37,6 +37,7 @@ namespace API.Controllers
             _userRepository = userRepository;
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         //[AllowAnonymous]
         //public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
@@ -73,7 +74,7 @@ namespace API.Controllers
             return await _userRepository.GetUserByIdAsync(id);
 
         } */
-
+        [Authorize(Roles = "Member")]
         [HttpGet("{username}", Name ="GetUser")]
         // [Authorize]
        // public async Task<ActionResult<AppUser>> GetUser(string username)

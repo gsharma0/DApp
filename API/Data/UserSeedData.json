@@ -14,7 +14,7 @@
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/54.jpg",
-                "IsMain": true
+                "IsMain": "true"
             }
         ]
     },
@@ -33,7 +33,7 @@
         "Photos": [
             {
                 "Url": "https://randomuser.me/api/portraits/women/50.jpg",
-                "IsMain": true
+                "IsMain": "true"
             }
         ]
     },

@@ -5,6 +5,8 @@
 .card-body{
     padding-bottom: 5px;
     padding-top: 5px;
+    max-height: 465px;
+    overflow-y: auto;
 }
 
 .chat{

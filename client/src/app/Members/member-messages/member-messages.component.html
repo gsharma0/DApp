@@ -1,10 +1,12 @@
 <div class="card">
     <div class="card-body">
-        <div *ngIf="this.messages?.length ===0">
+        <!-- commented to use signalR,same at every place
+        <div *ngIf="this.messages?.length ===0"> -->
+        <div *ngIf="(this.messageService.messageThread$|async)?.length ===0">
             No Messages Yet
         </div>
-        <ul *ngIf="this.messages?.length > 0" class="chat">
-            <li *ngFor="let message of this.messages">
+        <ul *ngIf="(this.messageService.messageThread$|async)?.length > 0" class="chat">
+            <li *ngFor="let message of (this.messageService.messageThread$|async)">
                 <div>
                     <span class="chat-img float-right">
                         <img class="rounded-circle" src="{{message.senderImageUrl || 'assets/user.png'}}" alt="{{message.senderUsername}}">

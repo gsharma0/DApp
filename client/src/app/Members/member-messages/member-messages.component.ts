@@ -16,7 +16,7 @@ export class MemberMessagesComponent implements OnInit {
   messageContent:string;
 
 
-  constructor(private messageService:MessageService) { }
+  constructor(public messageService:MessageService) { }
 
   ngOnInit(): void {
     //this.loadMessageThread();
@@ -27,12 +27,17 @@ export class MemberMessagesComponent implements OnInit {
       this.messages = response;
     })
   } */
-
-  createMessage(){
+//commented t use SignalR(below method) instead of message Service
+ /*  createMessage(){
     this.messageService.sendMessage(this.username, this.messageContent).subscribe(message =>{
       this.messages.push(message);
       this.messageForm.reset();
-    })
+    }) */
+
+    createMessage(){
+      this.messageService.sendMessage(this.username, this.messageContent).then(() =>{
+        this.messageForm.reset();
+      })
 
 
   }

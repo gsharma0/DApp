@@ -7,10 +7,10 @@
 }
 
  .card{
-     height: 94%;
+     height: 96%;
  }
 .card-body{
-    margin-top: 5px;
+    margin-top: -15px;
 
 }
 
@@ -18,5 +18,9 @@
    
     background-color: #e83283;
     border-top: none;
+}
+
+p{
+    margin-bottom: 0.5rem;
 }
 

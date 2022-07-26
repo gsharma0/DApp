@@ -42,9 +42,12 @@ loading = false;
   deleteMessage(id: number){
     this.messageservice.deleteMessage(id).subscribe(()=>{
       this.messages.splice(this.messages.findIndex(m=>m.id === id), 1);
-      this.messages
+      if(this.messages.length == 1){
+        this.loadMessages();
+      }      
     })
   }
 
 
 }
+

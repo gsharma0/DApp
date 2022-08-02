@@ -87,7 +87,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   selectTab(tabId:number){
     this.memberTabs.tabs[tabId].active =true;
     this.router.navigated =false;
-    history.pushState(null,null, '/' + this.member.userName + '/tab?=' + tabId);
+    //history.pushState(null,null, '/' + this.member.userName + '/tab?=' + tabId);
   }
 
   onTabActivated(data:TabDirective){

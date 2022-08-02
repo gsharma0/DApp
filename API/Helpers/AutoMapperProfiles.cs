@@ -23,6 +23,7 @@ namespace API.Helpers
             .ForMember(x=>x.SenderImageUrl, opt=>opt.MapFrom(y=>y.Sender.Photos.FirstOrDefault(z=>z.isMain).Url))
             .ForMember(x=>x.RecipientImageUrl, opt=>opt.MapFrom(y=>y.Recipient.Photos.FirstOrDefault(z=>z.isMain).Url));
             CreateMap<DateTime,DateTime>().ConvertUsing(d=>DateTime.SpecifyKind(d,DateTimeKind.Local));
+            CreateMap<MessageDto, Message>();
         }
     }
 }

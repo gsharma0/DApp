@@ -12,7 +12,7 @@ namespace API.Interfaces
     {
         public void Update(AppUser user);
 
-        public Task<bool> SaveAllAsync();
+        //public Task<bool> SaveAllAsync(); commented due to UOF
 
         public Task<AppUser> GetUserByIdAsync(int id);
 
@@ -25,5 +25,7 @@ namespace API.Interfaces
         public Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams);
 
         public Task<AppUser> GetUserByNameAsync(string username);
+
+        public Task<string> GetUserGender(string username);
     }
 }

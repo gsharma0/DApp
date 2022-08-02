@@ -21,15 +21,17 @@ namespace API.Extensions
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
             services.AddScoped<ITokenService,TokenService>();
             services.AddScoped<ICalculator,Calculator>();
-            services.AddScoped<ILikesRepository,LikeRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
+            //services.AddScoped<ILikesRepository,LikeRepository>(); commented due to UOF
+            //services.AddScoped<IMessageRepository, MessageRepository>(); commented due to UOF
             services.AddScoped<LogUserActivity>();
             services.AddScoped<ICloudinaryService,CloudinaryService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>(); commented due to UOF
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                
             });
 
             return services;

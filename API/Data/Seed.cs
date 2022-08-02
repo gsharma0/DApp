@@ -36,12 +36,12 @@ namespace API.Data
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
+                
 
                 //Commented to use Microsoft Identity feature
                 /* using var hmac = new HMACSHA512();               
                 user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("password"));
                 user.PasswordSalt = hmac.Key; */
-
               //  context.Users.Add(user);
              await userManager.CreateAsync(user,"password");
              await userManager.AddToRoleAsync(user,"Member");
@@ -52,6 +52,7 @@ namespace API.Data
             };
             await userManager.CreateAsync(admin,"password");
             await userManager.AddToRolesAsync(admin, new[] {"Admin", "Moderator"});
+            
 
            // await context.SaveChangesAsync();
         }

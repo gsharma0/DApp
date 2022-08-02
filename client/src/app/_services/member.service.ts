@@ -32,6 +32,7 @@ export class MemberService {
     })
   }
 
+
   /*  Commented as we used interceptor to pass http headers
   getMembers() {
     return this.http.get<member[]>(this.baseUrl + 'users', this.httpoptions)

@@ -3,7 +3,8 @@ export interface Group{
     connections: Connection[]
 }
 
- interface Connection{
-    username:string,
-    connectionId:string
+ export interface Connection{
+    connectionId:string,
+    userName:string
+
 }

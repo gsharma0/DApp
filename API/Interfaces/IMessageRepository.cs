@@ -30,6 +30,6 @@ namespace API.Interfaces
 
          Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName);
 
-         Task<bool> SaveAllSync();
+         //Task<bool> SaveAllSync(); commented due to UOF
     }
 }

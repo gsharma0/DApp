@@ -44,7 +44,7 @@ export class MessageService {
     })
 
     this.hubConnection.on("UpdatedGroup", (group: Group) =>{
-      if(group.connections.some(x=>x.username === otherusername)){
+      if(group.connections.find(x=>x.userName == otherusername)){
         this.messageThread$.pipe(take(1)).subscribe(messages =>{
           messages.forEach(message=>{
             if(!message.dateRead){
@@ -52,11 +52,10 @@ export class MessageService {
             }
           })
           this.messageThreadsSource.next([...messages]);
+          
         })
-      }
-      
-    })  
-
+      }      
+    })
   }
 
   stopHubConnection(){

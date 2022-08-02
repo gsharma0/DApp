@@ -16,24 +16,33 @@ namespace API.Controllers
     [Authorize]
     public class MessageController : BaseApiController
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IMessageRepository _messageRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public MessageController(IUserRepository userRepository , IMessageRepository messageRepository, IMapper mapper)
+        public MessageController(IUnitOfWork unitOfWork , IMapper mapper)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _messageRepository = messageRepository;
-            _userRepository = userRepository;
         }
+
+        //commented due to UOF
+        /*  private readonly IUserRepository _userRepository;
+         private readonly IMessageRepository _messageRepository;
+         private readonly IMapper _mapper;
+         public MessageController(IUserRepository userRepository , IMessageRepository messageRepository, IMapper mapper)
+         {
+             _mapper = mapper;
+             _messageRepository = messageRepository;
+             _userRepository = userRepository;
+         } */
         [HttpPost]
 
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto ){
             var username = User.GetUserName();
             if(username == createMessageDto.recipientUsername.ToLower()) return BadRequest("You Can't sent to youself");
 
-            var sender = await _userRepository.GetUserByNameAsync(username);
+            var sender = await _unitOfWork.userRepository.GetUserByNameAsync(username);
 
-            var recipient = await _userRepository.GetUserByNameAsync(createMessageDto.recipientUsername);
+            var recipient = await _unitOfWork.userRepository.GetUserByNameAsync(createMessageDto.recipientUsername);
 
             if(recipient == null) return BadRequest("User Not found");
             var message = new Message
@@ -45,9 +54,9 @@ namespace API.Controllers
                 Content = createMessageDto.Content
             };
 
-            _messageRepository.AddMessage(message);
+           _unitOfWork.messageRepository.AddMessage(message);
 
-            if(await _messageRepository.SaveAllSync()) return Ok(_mapper.Map<MessageDto>(message));
+            if(await _unitOfWork.Complete()) return Ok(_mapper.Map<MessageDto>(message));
 
             return BadRequest ("FAiled");
         }
@@ -58,25 +67,26 @@ namespace API.Controllers
         {
             messageParams.username = User.GetUserName();
 
-            var messages = await _messageRepository.GetMessagesForUser(messageParams);
+            var messages = await _unitOfWork.messageRepository.GetMessagesForUser(messageParams);
              Response.AddPaginationHeaders(messages.CurrentPage, messages.TotalPages, messages.PageSize,messages.TotalCount);
 
              return messages;
         }
 
-        [HttpGet("thread/{username}")]
+        //Commented as getting from SignalR
+        /* [HttpGet("thread/{username}")]
         public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string username){
 
             var currentUserName= User.GetUserName();
-            return Ok(await _messageRepository.GetMessageThread(currentUserName,username));
-        }
+            return Ok(await _unitOfWork.messageRepository.GetMessageThread(currentUserName,username));
+        } */
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<MessageDto>> DeleteMessage(int id)
         {
             var username = User.GetUserName();
 
-            var message = await _messageRepository.GetUserMessage(id);
+            var message = await _unitOfWork.messageRepository.GetUserMessage(id);
 
             if(message.RecipientUserName != username && message.SenderUsername != username) 
             return Unauthorized("Unauthorized");
@@ -85,9 +95,9 @@ namespace API.Controllers
             if(message.SenderUsername == username) message.SenderDeleted =true;
 
             if(message.RecipientDeleted && message.SenderDeleted){
-                _messageRepository.DeleteMessage(message);
+              _unitOfWork.messageRepository.DeleteMessage(message);
             }
-             if(await _messageRepository.SaveAllSync()) return Ok();
+             if(await _unitOfWork.Complete()) return Ok();
              
              return BadRequest("Failed");
 

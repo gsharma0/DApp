@@ -21,8 +21,8 @@ namespace API.Data.Migrations
                 name: "Connections",
                 columns: table => new
                 {
-                    ConnectionId = table.Column<int>(type: "TEXT", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ConnectionId = table.Column<int>(type: "TEXT", nullable: false),
+                        //.Annotation("Sqlite:Autoincrement", true),
                     UserName = table.Column<string>(type: "TEXT", nullable: true),
                     GroupName = table.Column<string>(type: "TEXT", nullable: true)
                 },

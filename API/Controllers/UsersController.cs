@@ -115,9 +115,9 @@ namespace API.Controllers
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicID = result.PublicId
             };
-            if(user.Photos.Count==0){
-                photo.isMain = true;
-            }
+            // if(user.Photos.Count==0){
+            //     photo.isMain = true;
+            // }
 
             user.Photos.Add(photo);
             if(await _unitOfWork.Complete()){
@@ -138,9 +138,11 @@ namespace API.Controllers
             var photo = user.Photos.FirstOrDefault(x=>x.ID == photoId);
 
             if(photo.isMain) return BadRequest("Already Main");
-  
+            if(!photo.isApproved) return BadRequest("Not Approved Yet");
+
             var mainPhoto = user.Photos.FirstOrDefault(x=>x.isMain);
             if(mainPhoto !=null) mainPhoto.isMain=false;
+            
 
             photo.isMain=true;
             if(await _unitOfWork.Complete()) return NoContent();

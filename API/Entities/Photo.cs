@@ -17,6 +17,8 @@ namespace API.Entities
 
         public int AppUserId { get; set; }
 
+        public bool isApproved { get; set; }
+
 
     }
 }

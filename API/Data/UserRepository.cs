@@ -24,10 +24,31 @@ namespace API.Data
 
         public async Task<MemberDto> GetMemberByNameAsync(string username)
         {
+            //var jef = new MemberDto();
+            // var dfd = await _context.Users
+             //.Include(p=>p.Photos)
+           // .IgnoreAutoIncludes()
+            //.Include(p=>p.Photos)            
+             //.Where(p=>p.Photos.Any(y=>y.isApproved))
+             //.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+           // .SingleOrDefaultAsync(x=>x.UserName==username);
+            //.ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            //.SingleOrDefaultAsync()
+            //.;
+         //   return dfd;
+        //     var query = _context.Users.AsQueryable();
+        //     query = query.Where(x=>x.UserName==username);
+        //     //query = query.Where(x=>x.Photos.Any(p=>p.isApproved));
+        //    var sds = query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider);
+        //    return await sds.SingleOrDefaultAsync();
+
             return await _context.Users
-            .Where(x=>x.UserName==username)
+           .Include(p=>p.Photos)
+            .Where(y=>y.Photos.Any(t=>t.isApproved))
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(x=>x.UserName==username); 
+
+            
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)

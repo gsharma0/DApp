@@ -36,7 +36,7 @@ namespace API.Data
             foreach (var user in users)
             {
                 user.UserName = user.UserName.ToLower();
-                
+                user.Photos.All(p=>p.isApproved = true);
 
                 //Commented to use Microsoft Identity feature
                 /* using var hmac = new HMACSHA512();               
